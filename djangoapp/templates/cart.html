@@ -1,0 +1,107 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+<!-- ============================= -->
+<!-- SECTION 1: PAGE TITLE -->
+<!-- Purpose: Displays cart heading -->
+<!-- ============================= -->
+<h2 class="text-center my-4">Your Cart</h2>
+
+
+<!-- ============================= -->
+<!-- SECTION 2: MAIN CONTAINER -->
+<!-- Purpose: Centers content and controls width -->
+<!-- ============================= -->
+<div class="container">
+
+{% if products %}
+
+    <!-- ============================= -->
+    <!-- SECTION 3: LOOP PRODUCTS -->
+    <!-- Purpose: Fetch and display each product dynamically -->
+    <!-- ============================= -->
+    {% for product in products %}
+
+        <!-- ============================= -->
+        <!-- SECTION 4: CART ITEM CARD -->
+        <!-- Purpose: Each product displayed as a card -->
+        <!-- ============================= -->
+        <div class="card mb-3 p-3 mx-auto" style="max-width: 650px;">
+            
+            <!-- ============================= -->
+            <!-- SECTION 5: FLEX ROW LAYOUT -->
+            <!-- Purpose: Align image, name, price horizontally -->
+            <!-- ============================= -->
+            <div class="d-flex align-items-center justify-content-between">
+
+                
+                <!-- ============================= -->
+                <!-- SECTION 6: PRODUCT IMAGE -->
+                <!-- Purpose: Show product image with fixed size -->
+                <!-- ============================= -->
+                {% if product.image %}
+                <img
+                    src="{{ product.image.url }}"
+                    alt="product image"
+                    style="width: 90px; height: 90px; object-fit: cover; border-radius: 10px;"
+                />
+                {% endif %}
+
+
+                <!-- ============================= -->
+                <!-- SECTION 7: PRODUCT NAME -->
+                <!-- Purpose: Display product title -->
+                <!-- ============================= -->
+                <h5 class="mb-0 flex-grow-1 ms-3">
+                    {{ product.name }}
+                </h5>
+
+
+                <!-- ============================= -->
+                <!-- SECTION 8: PRICE + BUTTON -->
+                <!-- Purpose: Show price and action button -->
+                <!-- ============================= -->
+                <div class="text-end">
+                    
+                    <!-- Product Price -->
+                    <p class="mb-1 fw-bold text-success">
+                        ₹{{ product.price }}
+                    </p>
+
+                    <!-- Payment Button -->
+                   <a href="{% url 'order_success' %}" class="btn btn-success btn-sm">
+    Proceed to Payment
+</a>
+
+<br>
+
+<a href="{% url 'remove_from_cart' product.id %}" class="btn btn-danger btn-sm">
+    Remove
+</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+{% endfor %}
+
+<div class="text-end mt-4 me-5">
+    <h4>Total: ₹{{ total_price }}</h4>
+</div>
+
+{% else %}
+
+    <!-- ============================= -->
+    <!-- SECTION 9: EMPTY CART -->
+    <!-- Purpose: Show message when no products -->
+    <!-- ============================= -->
+    <p class="text-center">Your cart is empty</p>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

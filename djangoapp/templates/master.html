@@ -1,0 +1,100 @@
+{% load static %}
+{% comment %} 1. STATIC LOADER {% endcomment %}
+{% comment %} Required to use static files like CSS, images and js {% endcomment %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% comment %} 2. META + TITLE {% endcomment %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GlowCart Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% comment %} 3. BOOTSTRAP CSS (CDN) {% endcomment %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {% comment %} 4. CUSTOM CSS (STATIC FILE) {% endcomment %}
+    <link rel="stylesheet" href="{% static 'djangoapp/css/style.css' %}">
+</head>
+
+<body>
+
+    {% comment %} 5. NAVBAR {% endcomment %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+
+            <a class="navbar-brand" href="{% url 'home' %}">GlowCart</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+
+                    {% comment %} Django URL Routing {% endcomment %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'products' %}">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cart' %}">Cart</a></li>
+
+                    {% comment %} Login Button and Logout using authentication {% endcomment %}
+                    {% if user.is_authenticated %}
+
+                        <li class="nav-item">
+                            <span class="nav-link text-white">Welcome, {{ user.username }}</span>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-danger ms-2" href="{% url 'logout' %}">
+                                Logout
+                            </a>
+                        </li>
+
+                    {% else %}
+
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-warning ms-2" href="{% url 'login' %}">
+                                Login
+                            </a>
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    {% comment %} 7. MAIN CONTENT BLOCK {% endcomment %}
+    {% comment %} Child templates will inject content here {% endcomment %}
+    <div class="container mt-4">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% comment %} 8. FOOTER {% endcomment %}
+    <footer class="bg-dark text-white text-center p-3 mt-5">
+
+        <p>&copy; 2026 GlowCart Skincare</p>
+
+        <small>Email: support@skincare.com | Phone: +91 8883755166</small>
+
+    </footer>
+
+    {% comment %} 9. BOOTSTRAP JS {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

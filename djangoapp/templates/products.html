@@ -1,0 +1,97 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ============================= -->
+<!-- SECTION 1: PAGE HEADER -->
+<!-- Purpose: Display page title -->
+<!-- ============================= -->
+<div class="container px-4 py-5">
+  <h2 class="pb-2 border-bottom text-center">GlowCart Products</h2>
+
+
+  <!-- ============================= -->
+  <!-- SECTION 2: PRODUCT GRID -->
+  <!-- Purpose: Create responsive layout (1 col mobile, 3 cols desktop) -->
+  <!-- ============================= -->
+  <div class="row g-4 py-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
+
+
+    <!-- ============================= -->
+    <!-- SECTION 3: LOOP PRODUCTS -->
+    <!-- Purpose: Fetch and display all products dynamically -->
+    <!-- ============================= -->
+    {% for product in products %}
+
+    <div class="col">
+
+      <!-- ============================= -->
+      <!-- SECTION 4: PRODUCT CARD -->
+      <!-- Purpose: Display each product in card format -->
+      <!-- ============================= -->
+      <div class="card h-100 shadow-sm">
+
+
+        <!-- ============================= -->
+        <!-- SECTION 5: PRODUCT IMAGE -->
+        <!-- Purpose: Show product image or default image -->
+        <!-- ============================= -->
+        {% if product.image %}
+        <img
+          src="{{ product.image.url }}"
+          class="card-img-top"
+          alt="product image"
+          style="height: 220px; object-fit: cover;"
+        />
+        {% else %}
+        <img
+          src="{% static 'SangeethaDjangoApp/images/no-image.png' %}"
+          class="card-img-top"
+          alt="no image"
+          style="height: 220px; object-fit: cover;"
+        />
+        {% endif %}
+
+
+        <!-- ============================= -->
+        <!-- SECTION 6: PRODUCT DETAILS -->
+        <!-- Purpose: Show name, price, description -->
+        <!-- ============================= -->
+        <div class="card-body d-flex flex-column">
+
+          <!-- Product Name -->
+          <h5 class="card-title">{{ product.name }}</h5>
+
+          <!-- Product Price -->
+          <p class="card-text fw-bold text-success">₹{{ product.price }}</p>
+
+          <!-- Product Description -->
+          <p class="card-text text-muted">
+            {{ product.description|truncatewords:10 }}
+          </p>
+
+
+          <!-- ============================= -->
+          <!-- SECTION 7: ACTION BUTTON -->
+          <!-- Purpose: Add product to cart -->
+          <!-- ============================= -->
+          <div class="mt-auto">
+            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success w-100">
+              Add to Cart
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {% endfor %}
+    <!-- Loop Ends -->
+
+  </div>
+</div>
+
+{% endblock %}

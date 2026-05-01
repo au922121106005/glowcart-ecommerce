@@ -1,0 +1,22 @@
+{% extends 'master.html' %}
+{% comment %} 1. TEMPLATE INHERITANCE {% endcomment %}
+
+{% block content %}
+
+{% comment %} 2. HERO SECTION {% endcomment %}
+<div class="bg-primary text-white py-5 text-center">        {% comment %} style="margin-top: 56px;" {% endcomment %}
+
+    <div class="container">
+
+        <h1 class="display-4">Welcome to My GlowCart Website</h1>
+
+        <p class="lead">A simple responsive website using GlowCart</p>
+
+        {% comment %} 3. BUTTON (Django URL) {% endcomment %}
+        <a href="{% url 'products' %}" class="btn btn-light btn-lg mt-3">Explore Products</a>
+
+    </div>
+
+</div>
+
+{% endblock %}
